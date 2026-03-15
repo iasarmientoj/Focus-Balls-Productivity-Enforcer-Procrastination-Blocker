@@ -10,20 +10,12 @@ muchos tenemos un diario con la ia, lo usaré para conoocerme mejor
 Idea: ya se me ocurrió algo raro, voy a hacer un script en python que por cada 30 segundos que pase en tiktok.com en el navegador, aparezca una bolita en la pantall rebotando de colores, y así entre mas dure en tiktok o youtube, aparecen mas bolitas hasta tapar la pantalla y se quitan una a una al pasar fuera de tiktok, no todas de golpe.
 
 
-en claude escribirlo
-
-pasarlo a python
-
-
-
 es la primera vez que hago una extension en chrome
-
 
 
 reinciiar chrome
 
 icono
-
 
 generar friccion circuito de dopamina que has estado utilizando como amortiguador emocional
 
@@ -31,8 +23,140 @@ generar friccion circuito de dopamina que has estado utilizando como amortiguado
 No, no la apagué para consumir, la apagué por una prueba en el codigo, cumple con lo que necesitaba, fastidiosa par ainterrumpr, pero no como para desistntalarla
 
 
-
 El "Sweet Spot" de la Fricción
 
 
 bola roja, captura la atencion y salta a la web de productividad
+
+
+---------------------------------------------------
+
+
+Para este instructable quise enfocarme en los miedos mas "abstractos" porque siento que no se les da tanta visibilidad e importancia como lo merecen, aunque también sufro levemente de los miedos clasicos como el miedo a las alturas, siento que nuestra generacion actual, y las anteriores tambien, sufrimos de miedos "complejos" y dificiles de tratar personalizadamente como se lo merecen, ya que cad auno es diferente y tiene necesidades internas, externas y de todo tiepo diferentes.
+
+Aqui vengo a tratar esos miedos que yo llamo complejos y darte herramientas para que tu mismo crees tu propia solcion.
+
+
+Materiales
+computador
+chrome
+
+
+1, para saber qué solucion plantear, debemos saber proimero qué miedos tenemos, como son miedos casi personalizados mi recomendacion es que se lo preguntes a una de las IAs avanzadas, ya sea porque mantengans allgun tipo de diario en uno de sus chats (como es mi caso con google gemini) o si tienes un diario de notas en tu celular o en algun chat de whatsapp personal, podrias subirlo a la IA y preguntarle este prompt:
+
+Teniendo  en cuenta todo lo que conoces de mi, qué miedos detectas en mí, o qué miedos profundos o superficiales tengo?
+
+De esta forma obtienes un listado de varios miedos ppersonalizados y justificados con los que probablemente te sientas muy identificados, ya que es un analisis hecho especificamente sobre tus datos y formas de expresarte que muchas veces ocultan miedos incosientes.
+
+En mi caso, los miedos que la IA donde tengo mi diario detectó en mi fueron estos, con una breveexplicacion:
+
+1. El miedo a la ineficiencia
+	Tienes un terror profundo a invertir energía en un sistema que matemáticamente está destinado a fallar.
+2. El miedo a la sobrecarga no estructurada
+	Tu zona de genialidad es el control: código, motores 3D, entornos donde tú dictas las reglas. Cuando tienes que enfrentarte a sistemas burocráticos caóticos y humanos (bancos, multitudes), tu sistema nervioso se sobrecarga.
+3. El miedo a la pérdida del control ejecutivo
+	Temes profundamente convertirte en alguien esclavo de sus impulsos más básicos (la dopamina barata, el entretenimiento, la pereza), perdiendo tu agudeza mental, tu disciplina y tu capacidad de enfoque
+4. El miedo a ser un "vendehumos"
+	Tienes miedo a no aportar valor real y tangible al mundo.
+5. El miedo a la dependencia estructural
+	Tienes miedo a ser un engranaje más que dependa de las decisiones de un jefe o del gobierno.
+
+2, los miedos como alarmas biologicas
+Antes de continuar, quiero hacer la anotacion de que muchos de estos miedos complejos son escencialmente buenos y mas bien son alarmas internas que nos muestran el camino oque debemos seguir, como por ejemplo mi miedo a no ser independiente o no aportar valor, así que igualemnte mas alla de lo que diga la IA, debes detenerte a pensar cual de esos miedos afectan negativamente tu vida y cuales la afectan positivamente
+
+3, Una vez que relaizaste este ejercicio de instrospeccion, debes seleccionar el miedo que quieres solucionar, en mi caso es el miedo numero 3, El miedo a la pérdida del control ejecutivo, que en escencia es el que conduce a la procastinacion, perdida de tiempo, trasnochos, malos habitos, culpas y de más.
+
+4, solciones tradicionales
+En mi caso particular, una de las cosas que mas me afecta es ver tiktok, ante cualquier minima frustracion o reto, como un pproblema en el trabajo, algo que no salio bien, algo que me da pereza, incluso para ponerme a escribir este intructable, mi mano se mueve automaticmanete a la barra de busqeda  y abre tiktok.
+E intentado instalar las tipicas extensiones que bloquean los sitios web, pero las termino desintalando por eso mismo, porque son demasiado estrictas y ponen una barrera tan alta que para mi mente es mas facil elliminarla o desactivarla antes de afrontar la frustracion dell momento.
+
+5, mi solucion
+luego de mucho pensar se me ocurrió esta idea, cuando ingrese a tiktok o alguna web de ese estilo, va a aparecer en pantalla una bolita de colores cada 5 segundoos, de esta foorma se empezará a llenar la pantalla impidiendome la correcta visualizacion y cuando cambie de web se empiezan a desaparecer una a una las bolitas cada 2.5 segundos, con eso me fastidiaré lo suficiente para darle tiempo a mi voluntad a alejarse y retomar la tarea, o al menos interrumpo el flujo del impulso basico.
+
+BOCETO IMG
+
+6, para desarrollar la extension, utilicé el IDE con IA Antigravity y Gemini 3.1 Pro (High), pero puedes usar cualquier IA que sea capaz de escribir codigo, lo mas importante es ser muy claro con el prompt y lo que deseas obtener. Para este caso puedes usar este prompt, aqui incluí de una vez mejoras de gamificacion en la implementacion que explicaré en pasos siguientes.
+
+Context: I need you to create a complete Chrome Extension (Manifest V3) called "Focus Balls: Productivity Enforcer". It is a gamified anti-procrastination tool. Instead of blocking websites, it floods the screen with bouncing balls the longer the user stays on a distracting site.
+
+Core Mechanics (Content Script & Logic):
+
+URL Tracking & SPA Support: Every 500ms, evaluate window.location.href to see if it matches any blocked site in the user's list. This is crucial to detect internal navigation on Single Page Apps like YouTube Shorts without page reloads.
+Punishment (Adding Balls): If the user is on a blocked site, spawn 1 new bouncing ball every 5 seconds. Save the ballCount in chrome.storage.local to sync across all tabs.
+Reward (Removing Balls): If the user is NOT on a blocked site, or the tab is hidden (document.visibilityState !== 'visible'), remove 1 ball every 2.5 seconds.
+Ball Properties: Balls are <div> elements appended to the body. They must NOT have pointer-events: none (they should obstruct clicking). Size must be Math.min(window.innerWidth, window.innerHeight) / 5, updating dynamically on window resize. Pick random vibrant colors for each ball.
+Physics Engine: Implement 2D movement using requestAnimationFrame. Balls must bounce off the screen edges and physically collide with each other (elastic collision/separation calculation). Add a very slight gravity pulling all balls towards the center of the screen so they annoyingly block the central content.
+The "Killer Ball" Boss Mechanic: 6. Only spawn the "Killer Ball" if there are at least 6 regular balls already on screen, AND after an initial cooldown of 45 seconds. (After it disappears, the cooldown randomizes between 30 and 50 seconds). 7. The Killer Ball is 1.2x the size of a normal ball, red, bounces around, and has a visible number inside starting at 10. 8. The number increases by 1 every 1 second (via setInterval). 9. When the user clicks the Killer Ball, the number decreases by 1. 10. Victory condition: If the counter hits 0, the Killer Ball is destroyed, ALL regular balls are destroyed (setting global ballCount to 0), and a message is fired to the background script to execute the "Extradition".
+
+Tab Tracking & Teleportation (Background Service Worker): 11. Keep tracking the total time spent actively on every open tab in the background using chrome.tabs.onActivated. 12. Listen for the victory message from the Killer Ball. When received: 13. Query all tabs in the current window. Find the "most productive" tab (the one with the lowest recorded active time, ignoring any tab whose URL matches the blacklist, and ignoring chrome:// tabs). 14. Switch to that productive tab using chrome.tabs.update. If no productive tab exists, create a new tab with google.com. 15. Finally, use chrome.tabs.remove to completely close the sender tab (the blacklisted site the user was procrastinating on).
+
+Options UI (Popup): 16. Create a simple 
+
+popup.html
+ and 
+
+popup.js
+ with a <textarea> where users can write blocked domains (one per line). 17. Default domains if empty: tiktok.com, instagram.com, youtube.com/shorts/, facebook.com, twitter.com, x.com, reddit.com, twitch.tv, netflix.com. 18. Save the list to chrome.storage.sync.
+
+Output: Provide me with all the necessary files (
+
+manifest.json
+, 
+
+content.js
+, 
+
+content.css
+, 
+
+background.js
+, 
+
+popup.html
+, 
+
+popup.js
+). Ensure the collision math and the SPA URL tracking are flawlessly implemented.
+
+
+
+
+7. La IA te generará una carpeta con una serie de archivos que componen la extension, ahora soolo  hace falta instalarla, lo cual es muy facil.
+Sigue estos sencillos pasos para empezar a usarla de inmediato:
+
+Abre Google Chrome.
+Escribe en la barra de direcciones chrome://extensions/ y presiona Enter.
+En la esquina superior derecha, busca un aviso que dice Modo de desarrollador y actívalo.
+Al activarlo, aparecerán nuevos botones arriba a la izquierda. Haz clic en Cargar descomprimida (Load unpacked).
+Se abrirá el explorador de archivos. Busca y selecciona la carpeta que acabamos de crear: c:\ProyIS\26.03.15 instructable miedos\tiktok_balls (Selecciona la carpeta entera, no entres a los archivos).
+Reinicia el navegador, cierra y vuelvelo a abrir
+¡Listo! Ya verás tu extensión instalada con un botón para ser encendida.
+
+
+8.  A medida que avancé en la implementacion agregué algunos elementos de gamificacion porque me di cuenta que no estaba cumpliendo con su funcion de alejarme de tiktok, asi que tras unos segundos, aparece una bola que tiene un contador, a la que yo puedo presionar haciendo varios clics rapidos para destruir todas las bolas, lo cual me hace que cambie mi foco de atencion y adicionalmente tras "ganar" y vencer a la bola roja, se cierra la pestaña de la procastinacion y la extension analiza cual pestaña dejé olvidada y me envia directamente a esa para recuperar la productividad.
+
+9, creacion del icono, puedes ir directamente a gemini y crear tu icono personalizado con nanobanana, yo usé este prompt:
+
+"A minimalist app icon of a bright glowing red sphere, surrounded by several smaller floating colorful spheres (blue, green, purple) against a dark background. Flat design, clean edges, vector art style."
+
+Luego descargas la imagen y vas a esta web favicon.io para que te lo convierta a los tamaños adecuados para tu extension, finalmente vuelves al IDE y le escribes los nombres de tus imagenes para que´la IA las agergue donde corresponda en la extension.
+
+En mi caso le di varios tamaños de imagen con estos nombres: android-chrome-192x192.png, android-chrome-512x512.png, favicon-16x16.png, favicon-32x32.png
+Y le escribi, "estos son los iconos de la extension en diferentes tamaños, agregalos donde corresponda." y recargas la extension como menciono a continuacion.
+
+10, recarga la extension haciendo clic en esta flechita de recargar en la extension
+
+11, adicionalmente habilita que la extension pueda ejecutarse en las pestañas incognito, para no "hacer trampa" y que las bolitas tambien se muestren en la pestaña de incognito.
+
+12, Hice este instructable principalenmnte pensando en que me fuera util a mi, asi que lo he probado desde entonces y he descubieirto esta cosas que cabe resaltar:
+
+Tiene un punto dulce optimo para mí, las demas extensiones las terminaba desinstalando, pero esta, ademas de que fue contruida por mi, me fastidia lo sufoiciente pero no es prihibitiva, lo cual hace que no la desisntale sino que me ayuda a recuerara mi consiencia del tiempo y la procastinacion
+
+Los colores son vivios, ayudando a que se sienta como un juego que libera dopamina aunque sea un protector
+
+Jamas habia creado una extension para google chrome, me parecia inalcanzable, este instructable tambien me ayudó  a vencer ese miedo tecnico.
+
+Cuando lo probé, mi primera sensacion fue de que es graciosos y muy funcional, me gustó mucho el resultado
+
+13, espero que este instructable les ayude a superar ese miedo a caer en sus impulsos basicos y los ayyude a tratar la procastinacion, que esta implicita en ese comportamiento, les comparto los archivos de la extension en un .zip, lo deben extraer y seguir los pasos del punto 7 para poder instalarla, ademas subi el proyecto a github por si les sirve https://github.com/iasarmientoj/Focus-Balls-Productivity-Enforcer-Procrastination-Blocker
+

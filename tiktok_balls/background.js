@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.storage.sync.get(['blockedSites'], (data) => {
       let blockedSites = (data.blockedSites && data.blockedSites.length > 0) 
         ? data.blockedSites 
-        : ['tiktok.com', 'instagram.com', 'youtube.com', 'facebook.com', 'twitter.com', 'x.com', 'reddit.com', 'twitch.tv', 'netflix.com'];
+        : ['tiktok.com', 'instagram.com', 'youtube.com/shorts/', 'facebook.com', 'twitter.com', 'x.com', 'reddit.com', 'twitch.tv', 'netflix.com'];
 
       // Leer todas las pestañas de la ventana actual
       chrome.tabs.query({ currentWindow: true }, (tabs) => {

@@ -1,4 +1,4 @@
-let targetSites = ['tiktok.com', 'instagram.com', 'youtube.com', 'facebook.com', 'twitter.com', 'x.com', 'reddit.com', 'twitch.tv', 'netflix.com'];
+let targetSites = ['tiktok.com', 'instagram.com', 'youtube.com/shorts/', 'facebook.com', 'twitter.com', 'x.com', 'reddit.com', 'twitch.tv', 'netflix.com'];
 let isTargetSite = false;
 
 // Estado
@@ -41,8 +41,8 @@ function updateTargetSites() {
     if (data.blockedSites && data.blockedSites.length > 0) {
       targetSites = data.blockedSites;
     }
-    const host = window.location.hostname;
-    isTargetSite = targetSites.some(site => host.includes(site));
+    const url = window.location.href;
+    isTargetSite = targetSites.some(site => url.includes(site));
   });
 }
 
@@ -287,6 +287,11 @@ setInterval(() => {
   // Para evitar que múltiples pestañas aceleren el tiempo,
   // solo la pestaña actualmente VISIBLE gestionará el reloj global.
   if (document.visibilityState !== 'visible') return;
+
+  // Soporte SPA: YouTube cambia de URL sin recargar la página.
+  // Re-evaluamos la URL en cada medio segundo para detectar cambios en el mismo tab.
+  const url = window.location.href;
+  isTargetSite = targetSites.some(site => url.includes(site));
 
   if (isTargetSite) {
     activeTimeCounter += 0.5;

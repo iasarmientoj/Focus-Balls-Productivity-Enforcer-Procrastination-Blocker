@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (data.blockedSites && data.blockedSites.length > 0) {
       sitesInput.value = data.blockedSites.join('\n');
     } else {
-      sitesInput.value = 'tiktok.com\ninstagram.com\nyoutube.com\nfacebook.com\ntwitter.com\nx.com\nreddit.com\ntwitch.tv\nnetflix.com';
+      sitesInput.value = 'tiktok.com\ninstagram.com\nyoutube.com/shorts/\nfacebook.com\ntwitter.com\nx.com\nreddit.com\ntwitch.tv\nnetflix.com';
     }
   });
 

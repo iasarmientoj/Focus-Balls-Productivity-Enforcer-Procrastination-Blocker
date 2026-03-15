@@ -1,6 +1,6 @@
 # Focus Balls: Productivity Enforcer/Procrastination Blocker 🔴🔵🟢
 
-## English 🇬🇧
+## English
 
 **Focus Balls** is an interactive and gamified Chrome Extension designed to combat procrastination. Instead of completely blocking websites like TikTok, Instagram, or YouTube Shorts, it uses a psychological physical approach: the longer you stay on a distracting site, the more colorful bouncing balls will flood your screen, obstaculizing your view until you decide to leave.
 
@@ -24,7 +24,7 @@
 
 ---
 
-## Español 🇪🇸
+## Español
 
 **Focus Balls** es una extensión de Chrome interactiva y gamificada diseñada para combatir la procrastinación. En lugar de bloquear por completo sitios de distracción como TikTok, Instagram o YouTube Shorts, utiliza un enfoque psicológico que ocupa el espacio del navegador: cuanto más tiempo pases perdiendo el tiempo, más pelotas rebotadoras inundarán tu pantalla, obstaculizando tu visión hasta que decidas irte a trabajar.
 

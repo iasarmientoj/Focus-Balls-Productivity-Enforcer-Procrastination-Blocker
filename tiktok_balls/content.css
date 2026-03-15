@@ -1,0 +1,31 @@
+.focus-extension-ball {
+  position: fixed;
+  border-radius: 50%;
+  z-index: 2147483647;
+  /* Máximo z-index para que esté sobre todo */
+  /* Bolitas bloquean clics intencionalmente */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.focus-extension-killer-ball {
+  position: fixed;
+  border-radius: 50%;
+  z-index: 2147483648; /* Por encima de las normales */
+  cursor: pointer;
+  background: radial-gradient(circle, #ff0d0d 0%, #8b0000 100%);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: sans-serif;
+  user-select: none;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), inset -10px -10px 20px rgba(0, 0, 0, 0.5);
+  animation: focus-pulse 0.4s infinite alternate;
+}
+
+@keyframes focus-pulse {
+  from { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), inset -10px -10px 20px rgba(0, 0, 0, 0.5); }
+  to { transform: scale(1.1); box-shadow: 0 0 50px rgba(255, 0, 0, 1), inset -10px -10px 30px rgba(0, 0, 0, 0.7); }
+}

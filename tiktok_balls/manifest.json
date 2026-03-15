@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Focus Balls",
+  "version": "1.0",
+  "description": "Si pasas mucho tiempo en Tiktok, aparecerán bolitas rebotando en tu pantalla.",
+  "icons": {
+    "16": "favicon-16x16.png",
+    "32": "favicon-32x32.png",
+    "192": "android-chrome-192x192.png",
+    "512": "android-chrome-512x512.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Configurar Focus Balls",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "favicon-16x16.png",
+      "32": "favicon-32x32.png",
+      "192": "android-chrome-192x192.png",
+      "512": "android-chrome-512x512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}

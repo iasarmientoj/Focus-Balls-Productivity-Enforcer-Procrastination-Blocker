@@ -294,6 +294,9 @@ setInterval(() => {
   isTargetSite = targetSites.some(site => url.includes(site));
 
   if (isTargetSite) {
+    // Si estamos en un sitio de distracción, avisamos globalmente que estamos activos
+    chrome.storage.local.set({ lastDistractionTime: Date.now() });
+
     activeTimeCounter += 0.5;
     inactiveTimeCounter = 0;
 
@@ -312,17 +315,27 @@ setInterval(() => {
       spawnKillerBall();
     }
   } else {
-    inactiveTimeCounter += 0.5;
-    activeTimeCounter = 0;
+    // Verificamos si hay alguna pestaña de distracción activa en otra ventana
+    chrome.storage.local.get(['lastDistractionTime', 'ballCount'], (data) => {
+      const lastDistraction = data.lastDistractionTime || 0;
+      
+      // Si hace menos de 1.5 segundos una red social reportó estar visible, no le quitamos sus bolas
+      if (Date.now() - lastDistraction < 1500) {
+        inactiveTimeCounter = 0;
+        activeTimeCounter = 0;
+        return;
+      }
 
-    // Castigo: si estamos en OTRA web (no tiktok), cada 2.5 segundos nos quitan una.
-    if (inactiveTimeCounter > 0 && inactiveTimeCounter % SECONDS_TO_REMOVE === 0) {
-      chrome.storage.local.get(['ballCount'], (data) => {
+      inactiveTimeCounter += 0.5;
+      activeTimeCounter = 0;
+
+      // Castigo: si estamos en OTRA web y ninguna de distracción está visible, cada 2.5 segundos nos quitan una.
+      if (inactiveTimeCounter > 0 && inactiveTimeCounter % SECONDS_TO_REMOVE === 0) {
         let count = data.ballCount || 0;
         if (count > 0) {
           chrome.storage.local.set({ ballCount: count - 1 });
         }
-      });
-    }
+      }
+    });
   }
 }, 500);
